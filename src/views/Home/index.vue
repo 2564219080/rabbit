@@ -6,6 +6,9 @@
         <HomeCategory />
         <!-- banner轮播图 -->
         <HomeBanner/>
+        <HomeNew/>
+        <HomeHot/>
+        <HomeProduct/>
       </div>
     </div>
   </div>
@@ -14,11 +17,17 @@
 <script>
 import HomeCategory from './components/home-category'
 import HomeBanner from './components/home-banner'
+import HomeNew from './components/home-new'
+import HomeHot from './components/home-hot'
+import HomeProduct from './components/home-product'
 export default {
   name: 'xtx-home-page',
   components: {
     HomeCategory,
-    HomeBanner
+    HomeBanner,
+    HomeNew,
+    HomeHot,
+    HomeProduct
   }
 }
 </script>
