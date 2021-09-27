@@ -45,6 +45,8 @@ import { ref, onMounted, provide } from 'vue'
 import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 import GoodsTab from './components/goods-tab'
 import GoodsHot from './components/goods-hot'
+import { useStore } from 'vuex'
+import { Message } from '@/components/Message/index.js'
 export default {
   name: 'XtxGoodsPage',
   components: {
@@ -70,9 +72,38 @@ export default {
     onBeforeRouteUpdate((to) => {
       getGoods(to.params.id)
     })
+    const store = useStore()
+    const currSku = ref(null)
+    const insertCart = () => {
+      // 没有完整的sku数据 直接return
+      if (!currSku.value) {
+        return false
+      }
+      // 没有商品梳理 直接return
+      if (number.value > goods.value.inventory) {
+        return false
+      }
+      store.dispatch('cart/asyncInsertCart', {
+        id: goods.value.id,
+        name: goods.value.name,
+        picture: goods.value.mainPictures[0],
+        skuId: currSku.value.skuId,
+        price: currSku.value.oldPrice,
+        nowPrice: currSku.value.price,
+        attrsText: currSku.value.specsText,
+        stock: currSku.value.inventory,
+        selected: true,
+        isEffective: true,
+        count: number.value
+      }).then(() => {
+        Message({ type: 'success', text: '加入购物车成功' })
+      })
+    }
     return {
       goods,
-      number
+      number,
+      currSku,
+      insertCart
     }
   }
 }

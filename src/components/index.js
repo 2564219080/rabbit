@@ -9,6 +9,8 @@ import City from './City'
 import XtxNumber from './Number'
 import Button from './Button'
 import CheckBox from './CheckBox'
+import Message from './Message/index.vue'
+import Dialog from './Dialog'
 export default {
   install (Vue) {
     Vue.component(Skeleton.name, Skeleton)
@@ -22,5 +24,7 @@ export default {
     Vue.component(XtxNumber.name, XtxNumber)
     Vue.component(Button.name, Button)
     Vue.component(CheckBox.name, CheckBox)
+    Vue.component(Message.name, Message)
+    Vue.component(Dialog.name, Dialog)
   }
 }

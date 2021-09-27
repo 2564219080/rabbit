@@ -23,6 +23,7 @@ export default {
     const changeChecked = () => {
       checked.value = !checked.value
       emit('update:modelValue', checked.value)
+      emit('change', checked.value)
     }
     watch(() => props.modelValue,
       () => {

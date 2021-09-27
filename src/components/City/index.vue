@@ -17,7 +17,7 @@ import axios from 'axios'
 import { ref, onMounted, reactive, computed, toRefs } from 'vue'
 export default {
   name: 'XtxCity',
-  setup () {
+  setup (porps, { emit }) {
     // 控制展开收起,默认收起
     const active = ref(false)
     // 打开弹框
@@ -74,6 +74,7 @@ export default {
         changeResult.countyCode = cur.code
         changeResult.countyName = cur.name
       }
+      emit('changeCty', changeResult)
     }
 
     const filterData = computed(() => {

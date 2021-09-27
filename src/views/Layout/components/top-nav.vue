@@ -2,12 +2,12 @@
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <template v-if="$store.state.user.token">
-          <li><a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a></li>
-          <li><a href="javascript:;">退出登录</a></li>
+        <template v-if="$store.state.user.profile.token">
+          <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{$store.state.user.profile.nickname || $store.state.user.profile.account}}</a></li>
+          <li><a href="javascript:;" @click="logout">退出登录</a></li>
         </template>
         <template v-else>
-          <li><a href="javascript:;">请先登录</a></li>
+          <li><router-link to="/login">请先登录</router-link></li>
           <li><a href="javascript:;">免费注册</a></li>
         </template>
         <li><a href="javascript:;">我的订单</a></li>
@@ -20,8 +20,28 @@
   </nav>
 </template>
 <script>
+import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
 export default {
-  name: 'AppTopnav'
+  name: 'AppTopnav',
+  setup () {
+    const store = useStore()
+    const router = useRouter()
+    const route = useRoute()
+    function logout () {
+      store.commit('user/clearProfile')
+      store.commit('cart/setList', [])
+      router.push({
+        path: 'login',
+        query: {
+          redirectUrl: encodeURIComponent(route.fullPath)
+        }
+      })
+    }
+    return {
+      logout
+    }
+  }
 }
 </script>
 <style scoped lang="less">

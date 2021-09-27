@@ -1,6 +1,6 @@
 <template>
   <div class="xtx-numbox">
-    <div class="label">数量</div>
+    <div class="label" v-if="isLable">数量</div>
     <div class="numbox">
       <a href="javascript:;" @click="decrease">-</a>
       <input type="text" readonly :value="curNum" />
@@ -24,6 +24,10 @@ export default {
     },
     modelValue: {
       type: Number
+    },
+    isLable: {
+      type: Boolean,
+      default: true
     }
   },
   setup (props, { emit }) {
@@ -32,11 +36,13 @@ export default {
       if (curNum.value === props.max) return false
       curNum.value++
       emit('update:modelValue', curNum.value)
+      emit('change', curNum.value)
     }
     function decrease () {
       if (curNum.value === props.min) return false
       curNum.value--
       emit('update:modelValue', curNum.value)
+      emit('change', curNum.value)
     }
     watch(() => {
       return props.modelValue
